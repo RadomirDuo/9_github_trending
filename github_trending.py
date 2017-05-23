@@ -30,8 +30,6 @@ if __name__ == '__main__':
     for repo in top_github_repositories:
         print('Название: {}'.format(repo['name']))
         print('Описание: {}'.format(repo['description']))
-        print('Количество звёзд: {}'.format(repo['stargazers_count']))
-        print('Количество задач: {}'.
-              format(get_open_issues_amount(repo['owner']['login'],
-                                            repo['name'])))
+        print('Кол-во звёзд: {}'.format(repo['stargazers_count']))
+        print('Кол-во задач: {}'.format(get_open_issues_amount(repo['owner']['login'],repo['name'])))
         print('Ссылка: {}\n'.format(repo['svn_url']))
