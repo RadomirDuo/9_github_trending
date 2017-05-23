@@ -12,13 +12,22 @@ def get_trending_repositories(top_size):
                        'per_page': top_size,
                        }
     query_trending_repo = requests.get(url, params=query_parameter)
-    return query_trending_repo.json().get()
+    return query_trending_repo.json().get('items')
 
 
 def get_open_issues_amount(repo_owner, repo_name):
     url = 'https://api.github.com/repos/{}/{}/issues'.format(repo_owner, repo_name)
     query_of_issues = requests.get(url)
-    return len(query_of_issues)
+    return len(query_of_issues.json())
+
 
 if __name__ == '__main__':
-    pass
+    top_size = input('Введите количество репозиториев для показа: ')
+    top_github_repositories = get_trending_repositories(top_size)
+    for repo in top_github_repositories:
+        print('Название: {}'.format(repo['name']))
+        print('Описание: {}'.format(repo['description']))
+        print('Количество звёзд: {}'.format(repo['stargazers_count']))
+        print('Количество задач: {}'.format(get_open_issues_amount(repo['owner']['login'],
+                                                                   repo['name'])))
+        print('Ссылка: {}\n'.format(repo['svn_url']))
