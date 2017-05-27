@@ -5,7 +5,9 @@ from datetime import datetime, timedelta
 def get_trending_repositories(top_size):
     delta_days = 7
     url = 'https://api.github.com/search/repositories'
-    range_days = 'created:>{}'.format((datetime.now() - timedelta(days=delta_days)).strftime('%Y-%m-%d'))
+    range_days = 'created:>{}'.format((datetime.now()
+                                       - timedelta(days=delta_days))
+                                      .strftime('%Y-%m-%d'))
     query_parameter = {'q': range_days,
                        'sort': 'stars',
                        'order': 'desc',
@@ -16,8 +18,8 @@ def get_trending_repositories(top_size):
 
 
 def get_open_issues_amount(repo_owner, repo_name):
-    url = 'https://api.github.com/repos/{}/{}/issues'.format(repo_owner, repo_name)
-
+    url = 'https://api.github.com/repos/{}/{}/issues'.format(repo_owner,
+                                                             repo_name)
     query_of_issues = requests.get(url)
     return len(query_of_issues.json())
 
@@ -30,5 +32,7 @@ if __name__ == '__main__':
         print('Название: {}'.format(repo['name']))
         print('Описание: {}'.format(repo['description']))
         print('Кол-во звёзд: {}'.format(repo['stargazers_count']))
-        print('Кол-во задач: {}'.format(get_open_issues_amount(repo['owner']['login'],repo['name'])))
+        print('Кол-во задач: {}'.format(get_open_issues_amount
+                                        (repo['owner']['login'],
+                                         repo['name'])))
         print('Ссылка: {}\n'.format(repo['svn_url']))
